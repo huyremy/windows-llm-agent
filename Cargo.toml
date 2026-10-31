@@ -1,0 +1,60 @@
+[package]
+name = "windows-llm-agent"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.75"
+
+[dependencies]
+# HTTP client + async runtime
+reqwest = { version = "0.12", features = ["json"] }
+tokio = { version = "1", features = ["full"] }
+
+uuid = { version = "1", features = ["v4"] }
+base64 = "0.22"
+
+#PDF docs scrape
+pdf-extract = "0.7"     # đọc PDF
+zip = "2.2"             # đọc DOCX (nó là file zip)
+html2text = "0.12"      # HTML → text thuần khi scrape
+
+# JSON
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+
+# Error handling
+anyhow = "1"
+thiserror = "1"
+
+# CLI
+clap = { version = "4", features = ["derive"] }
+dialoguer = "0.11"
+
+# File parsing
+pdf = "0.8"
+roxmltree = "0.20"
+textwrap = "0.16"
+
+# Embedding (local model - tùy chọn)
+# burn = { version = "0.16", features = ["torch"] }  # nếu dùng local model
+
+# Logging
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+
+# Time (thêm feature serde)
+chrono = { version = "0.4", features = ["serde"] }
+
+# Environment variables (.env)
+dotenv = "0.15"
+
+[lib]
+name = "windows_llm_agent"
+path = "src/lib.rs"
+
+[[bin]]
+name = "windows-llm-agent"
+path = "src/main.rs"
+
+[profile.release]
+opt-level = 3
+lto = true
